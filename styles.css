@@ -1,12 +1,21 @@
 body {
 	background-color: #d3d3d3;
 	margin: 0;
+	font-family: Arial,helvetica,sans-serif;
 }
 h1 {
 	display: table;
 	margin: auto;
 	font-family: Georgia;
 	color: #fff;
+}
+a:link,a:visited {
+	color: red;
+	text-decoration: none;
+}
+a:hover, a:active{
+	color: #fff;
+	text-decoration: none;
 }
 #headerWrapper {
 	background: none repeat scroll 0 0 #2F4779;
@@ -22,7 +31,20 @@ h1 {
 	display: table;
 	margin: auto;
 	position: absolute;
-	margin-top: 140px;
-	margin-left:228px;
+	margin-top: 130px;
 	width: 1200px;
+}
+#bodyWrapper {
+	display: table;
+	margin: auto;
+	text-align:center;
+	width:1200px;
+}
+.right {
+	float: right;
+	margin-right: 50px;
+	text-align: right;
+}
+.whiteText {
+	color:#fff;
 }
