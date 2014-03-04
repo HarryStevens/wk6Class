@@ -25,7 +25,6 @@ function dataLoaded(UNEMP) {
 	var dataRows = UNEMP.rows;
 	//empty array to fill with data for Google
 	var dataArray = [];
-	
 
 	for (var i = 0; i < dataRows.length; i++) {
 		var currRow = dataRows[i];
@@ -35,11 +34,12 @@ function dataLoaded(UNEMP) {
 		var momentDate = moment(currDate);
 		var finalDate = momentDate._d;
 
-		//Grabbing the value number
+		//Grabbing the value number and switching it to a percentage
 		var currValue = currRow[1];
+		var perValue = currValue/100;
 
 		//Creating my array with the date and value number for the Google Viz
-		var currArray = [finalDate, currValue];
+		var currArray = [finalDate, perValue];
 		dataArray.push(currArray);
 	}
 
@@ -49,7 +49,12 @@ function dataLoaded(UNEMP) {
 	data.addColumn('number', 'Unemployment');
 	data.addRows(dataArray);
 
-	//This section draws the chart
+	//This section will format the unemployment date to add a percentage at the end
+	var formatter = new google.visualization.NumberFormat({
+		pattern : ['#.#%']
+	});
+	formatter.format(data, 1);
+	//This section draws the chart. It is taken from the Google line chart documentation.
 	var options = {
 		title : 'Select a date range to zoom in. Right click to zoom out.',
 		legend : {
@@ -59,6 +64,7 @@ function dataLoaded(UNEMP) {
 			stroke : '#000',
 			strokeWidth : 4
 		},
+		colors : ['#2F4779'],
 		curveType : 'function',
 		explorer : {
 			actions : ['dragToZoom', 'rightClickToReset'],
@@ -75,10 +81,32 @@ function dataLoaded(UNEMP) {
 		},
 		vAxis : {
 			title : 'Percent unemployed',
-			ticks : [0, 2, 4, 6, 8, 10, 12],
-			format : '#'
+			ticks : [.00, .02, .04, .06, .08, .10, .12],
+			format : '#%'
 		},
-		selectionMode : 'multiple'
+		selectionMode : 'multiple',
+		/*
+		annotations : {
+			boxStyle : {
+				stroke : '#888', // Color of the box outline.
+				strokeWidth : 1, // Thickness of the box outline.
+				rx : 10, // x-radius of the corner curvature.
+				ry : 10, // y-radius of the corner curvature.
+				gradient : {// Attributes for linear gradient fill.
+					color1 : '#fbf6a7', // Start color for gradient.
+					color2 : '#33b679', // Finish color for gradient.
+					x1 : '0%',
+					y1 : '0%', // Where on the boundary to start and end the
+					x2 : '100%',
+					y2 : '100%', // color1/color2 gradient, relative to the
+					// upper left corner of the boundary.
+					useObjectBoundingBoxUnits : true // If true, the boundary for x1, y1,
+					// x2, and y2 is the box. If false,
+					// it's the entire chart.
+				}
+			}
+		}
+		*/
 	};
 
 	var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
