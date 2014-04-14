@@ -2,6 +2,9 @@
  * @author Harry Stevens
  */
 
+var tableURL = "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+*+FROM+1_g7L00qKd8I9rNtTrWgS1iHzkh8SmTYy8oS_VC99+WHERE+DATE>=";
+var myKey = "&key=AIzaSyB-QJux9WIJmey5IJYzPImNzg-xP1gpvU8";
+
 //1. Document ready calls pageLoaded function
 $(document).ready(pageLoaded);
 
@@ -15,7 +18,19 @@ function pageLoaded() {
 
 //3. googleLoaded function loads the data and calls the dataLoaded function
 function googleLoaded() {
-	$.get("https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+*+FROM+1_g7L00qKd8I9rNtTrWgS1iHzkh8SmTYy8oS_VC99&key=AIzaSyB-QJux9WIJmey5IJYzPImNzg-xP1gpvU8", dataLoaded, "json");
+	$(".btn").on("click", buttonHandler);
+	$("#year_1948").click();
+}
+
+//4. Tells when a given button is clicked and adds the right data
+function buttonHandler(e) {
+	var myID = e.target.id;
+	var myYear = myID.split("_")[1];
+	$.get(tableURL+"'"+myYear+"-01-01'"+myKey, dataLoaded, "json");	
+	$("#startdate").html(myYear);
+	$("#buttons div").removeClass("active");
+	$("#year_"+myYear).addClass("active");
+	
 }
 
 //4. dataLoaded function formats the data, runs it throw the Google Visualizaiton library, and displays it
@@ -49,7 +64,7 @@ function dataLoaded(UNEMP) {
 	data.addColumn('number', 'Unemployment');
 	data.addRows(dataArray);
 
-	//This section will format the unemployment date to add a percentage at the end
+	//This section will format the unemployment data to add a percentage at the end
 	var formatter = new google.visualization.NumberFormat({
 		pattern : ['#.#%']
 	});

@@ -31,7 +31,7 @@ a:hover, a:active{
 	display: table;
 	margin: auto;
 	position: absolute;
-	margin-top: 130px;
+	margin-top: 15px;
 	width: 1200px;
 }
 #bodyWrapper {
@@ -47,4 +47,31 @@ a:hover, a:active{
 }
 .whiteText {
 	color:#fff;
+}
+#buttons {
+	display: table;
+	margin: 0 auto;
+	margin-top: 135px;
+}
+.btn {
+	float: left;
+	padding: 10px;
+	background-color: #fff;
+	color: #000;
+	margin-right: 10px;
+	border: 2px solid #000;
+	border-radius: 4px;
+	cursor: pointer;
+}
+.btn:hover {
+	color: #aaa;
+	border: 2px solid #aaa;
+}
+#startdate {
+	display:inline;
+}
+.active {
+	border: 2px solid #aaa;
+	cursor: default;
+	color: #aaa;
 }
