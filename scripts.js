@@ -2,8 +2,11 @@
  * @author Harry Stevens
  */
 
+//GLOBAL VARIABLES: These are from the Fusion Tables URL that we can use to bring in the data.
 var tableURL = "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+*+FROM+1_g7L00qKd8I9rNtTrWgS1iHzkh8SmTYy8oS_VC99+WHERE+DATE>=";
 var myKey = "&key=AIzaSyB-QJux9WIJmey5IJYzPImNzg-xP1gpvU8";
+var startYear = '';
+var endYear = '2030';
 
 //1. Document ready calls pageLoaded function
 $(document).ready(pageLoaded);
@@ -18,22 +21,40 @@ function pageLoaded() {
 
 //3. googleLoaded function loads the data and calls the dataLoaded function
 function googleLoaded() {
-	$(".btn").on("click", buttonHandler);
+	$(".btn").on("click", clickHandler);
 	$("#year_1948").click();
 }
 
 //4. Tells when a given button is clicked and adds the right data
-function buttonHandler(e) {
-	var myID = e.target.id;
-	var myYear = myID.split("_")[1];
-	$.get(tableURL+"'"+myYear+"-01-01'"+myKey, dataLoaded, "json");	
-	$("#startdate").html(myYear);
-	$("#buttons div").removeClass("active");
-	$("#year_"+myYear).addClass("active");
+function clickHandler(e) {
+	var parentId = $(this).parent().attr("id");
+	console.log(parentId);
+
+	if (parentId == 'buttons-start') {
+		var startID = e.target.id;
+		startYear = startID.split("_")[1];
+		$("#buttons-start div").removeClass("active");
+		$("#year_" + startYear).addClass("active");
+	} else {
+		var endID = e.target.id;
+		endYear = endID.split("_")[1];
+		$("#buttons-end div").removeClass("active");
+		$("#eyear_" + endYear).addClass("active");
+	} 
 	
+	if (startYear>endYear) {
+		$("#chart_div").html("Start date cannot exceed end date.");
+	}
+
+	console.log(startYear);
+	console.log(endYear);
+
+	$.get(tableURL + "'" + startYear + "-01-01'+AND+DATE<='" + endYear + "-01-01'" + myKey, dataLoaded, "json");
+	$("#startdate").html(startYear);
+	$("#enddate").html(endYear);
 }
 
-//4. dataLoaded function formats the data, runs it throw the Google Visualizaiton library, and displays it
+//5. dataLoaded function formats the data, runs it throw the Google Visualizaiton library, and displays it
 function dataLoaded(UNEMP) {
 
 	//This entire section until the end of the for loop is because I have to change the date string in my data to an actual date
@@ -51,7 +72,7 @@ function dataLoaded(UNEMP) {
 
 		//Grabbing the value number and switching it to a percentage
 		var currValue = currRow[1];
-		var perValue = currValue/100;
+		var perValue = currValue / 100;
 
 		//Creating my array with the date and value number for the Google Viz
 		var currArray = [finalDate, perValue];
@@ -69,6 +90,7 @@ function dataLoaded(UNEMP) {
 		pattern : ['#.#%']
 	});
 	formatter.format(data, 1);
+
 	//This section draws the chart. It is taken from the Google line chart documentation.
 	var options = {
 		title : 'Select a date range to zoom in. Right click to zoom out.',
@@ -100,30 +122,7 @@ function dataLoaded(UNEMP) {
 			format : '#%'
 		},
 		selectionMode : 'multiple',
-		/*
-		annotations : {
-			boxStyle : {
-				stroke : '#888', // Color of the box outline.
-				strokeWidth : 1, // Thickness of the box outline.
-				rx : 10, // x-radius of the corner curvature.
-				ry : 10, // y-radius of the corner curvature.
-				gradient : {// Attributes for linear gradient fill.
-					color1 : '#fbf6a7', // Start color for gradient.
-					color2 : '#33b679', // Finish color for gradient.
-					x1 : '0%',
-					y1 : '0%', // Where on the boundary to start and end the
-					x2 : '100%',
-					y2 : '100%', // color1/color2 gradient, relative to the
-					// upper left corner of the boundary.
-					useObjectBoundingBoxUnits : true // If true, the boundary for x1, y1,
-					// x2, and y2 is the box. If false,
-					// it's the entire chart.
-				}
-			}
-		}
-		*/
 	};
-
 	var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 	chart.draw(data, options);
 

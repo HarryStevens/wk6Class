@@ -15,7 +15,10 @@
 	</head>
 	<body>
 		<div id="headerWrapper">
-			<h1>U.S. Civilian Unemployment, <div id="startdate">1948</div> - 2014</h1>
+			<h1>U.S. Civilian Unemployment,
+			<div id="startdate">
+				1948
+			</div> - <div id="enddate">2014</div></h1>
 			<div class="right">
 				<div class="whiteText">
 					<a target="_blank" href="http://www.research.stlouisfed.org/fred2/series/UNRATE">Data from FRED</a>
@@ -24,27 +27,64 @@
 		</div>
 		<div id="bodyWrapper">
 			<div id="buttons">
-				<div class="btn active" id="year_1948">
-					1948
+				<div id="buttons-start">
+					<div class="btn-section">
+						START DATE:
+					</div>
+					<div class="btn active" id="year_1948">
+						1948
+					</div>
+					<div class="btn" id="year_1950">
+						1950
+					</div>
+					<div class="btn" id="year_1960">
+						1960
+					</div>
+					<div class="btn" id="year_1970">
+						1970
+					</div>
+					<div class="btn" id="year_1980">
+						1980
+					</div>
+					<div class="btn" id="year_1990">
+						1990
+					</div>
+					<div class="btn" id="year_2000">
+						2000
+					</div>
 				</div>
-				<div class="btn" id="year_1950">
-					1950
+				<br /><br /><br />
+				<div id="buttons-end">
+					<div class="btn-section rightspace20">
+						END DATE:
+					</div>
+					<div class="btn" id="eyear_1960">
+						1960
+					</div>					
+					<div class="btn" id="eyear_1970">
+						1970
+					</div>
+					<div class="btn" id="eyear_1980">
+						1980
+					</div>
+					<div class="btn" id="eyear_1990">
+						1990
+					</div>
+					<div class="btn" id="eyear_2000">
+						2000
+					</div>
+					<div class="btn" id="eyear_2010">
+						2010
+					</div>
+					<div class="btn active" id="eyear_2014">
+						2014
+					</div>
 				</div>
-				<div class="btn" id="year_1960">
-					1960
-				</div>
-				<div class="btn" id="year_1970">
-					1970
-				</div>
-				<div class="btn" id="year_1980">
-					1980
-				</div>
-				<div class="btn" id="year_1990">
-					1990
-				</div>
-				<div class="btn" id="year_2000">
-					2000
-				</div>
+				
+				
+				
+				
+				
 			</div>
 			<div id="chart_div"></div>
 

@@ -70,8 +70,19 @@ a:hover, a:active{
 #startdate {
 	display:inline;
 }
+#enddate {
+	display:inline;
+}
 .active {
 	border: 2px solid #aaa;
 	cursor: default;
 	color: #aaa;
+}
+.btn-section {
+	float:left;
+	padding: 10px;
+	font-weight: bold;
+}
+.rightspace20 {
+	margin-right: 20px;
 }
