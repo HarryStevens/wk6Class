@@ -27,10 +27,9 @@ function googleLoaded() {
 
 //4. Tells when a given button is clicked and adds the right data
 function clickHandler(e) {
-	var parentId = $(this).parent().attr("id");
-	console.log(parentId);
+	var parentID = $(this).parent().attr("id");
 
-	if (parentId == 'buttons-start') {
+	if (parentID == 'buttons-start') {
 		var startID = e.target.id;
 		startYear = startID.split("_")[1];
 		$("#buttons-start div").removeClass("active");
@@ -45,9 +44,6 @@ function clickHandler(e) {
 	if (startYear>endYear) {
 		$("#chart_div").html("Start date cannot exceed end date.");
 	}
-
-	console.log(startYear);
-	console.log(endYear);
 
 	$.get(tableURL + "'" + startYear + "-01-01'+AND+DATE<='" + endYear + "-01-01'" + myKey, dataLoaded, "json");
 	$("#startdate").html(startYear);
